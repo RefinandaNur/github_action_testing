@@ -132,8 +132,9 @@ df.to_csv('LokerData.csv')
 print("push data list to MongoDB")
 
 # Establish a client connection to MongoDB
-uri = "mongodb+srv://putririzkialifah:maryo221970@cluster0.g3aqgrs.mongodb.net/?retryWrites=true&w=majority"
-client = MongoClient(uri)
+# establish a client connection to MongoDB
+MONGODB_CONNECTION_STRING = os.environ['MONGODB_CONNECTION_STRING']
+client = MongoClient(MONGODB_CONNECTION_STRING)
 
 # convert to dictionary for uploading to MongoDB
 df = df.to_dict('records')

@@ -2,40 +2,35 @@ name: run main.py
 
 on:
   schedule:
-    - cron: '5 * * * *'  # every 7 minutes
+    - cron: '5 * * * *' # 5 menit
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: macos-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: checkout repo content
-        uses: actions/checkout@v2 # checkout the repository content to github runner
-
-      - name: setup python
-        uses: actions/setup-python@v4
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
-          python-version: '3.9' # install the python version needed
-          
-      - name: install python packages
+          python-version: '3.9'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Script
+        env:
+          MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING }}
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          
-      - name: execute py script # run main.py
-        #env:
-          #SOME_SECRET: ${{ secrets.SOME_SECRET }}
-        run: python main2.py
-          
-      - name: commit files
+          python main2.py
+
+      - name: Commit and Push Changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A
-          git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
-          
-      # - name: push changes
-      #   uses: ad-m/github-push-action@v0.6.0
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     branch: main 
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add LokerData.csv
+          git commit -m "Updated data with GitHub Actions" || echo "No Changes to Commit"
+          git push origin master || echo "No Changes to Commit"
