@@ -15,16 +15,16 @@ from pymongo.server_api import ServerApi
 import os
 #import requests
 
-# scrape process
-try:
-    SOME_SECRET = os.environ["SOME_SECRET"]
-except KeyError:
-    SOME_SECRET = "Token not available!"
+# # scrape process
+# try:
+#     SOME_SECRET = os.environ["SOME_SECRET"]
+# except KeyError:
+#     SOME_SECRET = "Token not available!"
     # or raise an error if it's not available so that the workflow fails
 
 title = []
 perusahaan = []
-urllink = []
+#urllink = []
 #lokasi =[]
 #gaji = []
 
