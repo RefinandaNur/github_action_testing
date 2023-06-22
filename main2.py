@@ -167,10 +167,6 @@ MONGODB_CONNECTION_STRING = os.environ['MONGODB_CONNECTION_STRING']
 client = MongoClient(MONGODB_CONNECTION_STRING)
 
 
-#uri = "mongodb+srv://putririzkialifah:maryo221970@cluster0.g3aqgrs.mongodb.net/?retryWrites=true&w=majority"
-#client = MongoClient(uri)
-
-
 # convert to dictionary for uploading to MongoDB
 df = df.to_dict('records')
 
